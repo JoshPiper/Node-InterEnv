@@ -1,0 +1,23 @@
+{
+  "name": "interenv",
+  "version": "0.0.1",
+  "description": "Environment Handling.",
+  "main": "env.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "Joshua Piper",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://git.doctor-internet.dev/internet/node-interenv.git"
+  },
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "dotenv-expand": "^5.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  }
+}
