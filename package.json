@@ -1,6 +1,6 @@
 {
   "name": "interenv",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Environment Handling.",
   "main": "env.js",
   "scripts": {
