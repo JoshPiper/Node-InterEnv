@@ -83,6 +83,26 @@ class env {
 
 		return String(this.env[key]).split(sep)
 	}
+
+	/**
+	 * Return a new env object, containing only keys which being with the specified prefix.
+	 * @param prefix
+	 * @return env
+	 */
+	prefixed(prefix){
+		let out = {}
+		let leng = prefix.length
+
+		for (let key in this.env){
+			key = String(key)
+			if (key.startsWith(prefix)){
+				let outKey = key.slice(leng)
+				out[outKey] = this.env[key]
+			}
+		}
+
+		return new env(out)
+	}
 }
 
 module.exports = env

@@ -158,4 +158,30 @@ describe("env", function(){
 			assert.deepStrictEqual(testList, ["abc", "efg", "hij"])
 		})
 	})
+
+	describe("prefixed()", function(){
+		let testEnv = new env({
+			"TEST_LIST_NORM": "abc,efg",
+			"TEST_LIST_CSTM": "abc|efg|hij",
+			"TEST_LIST_NONE": "qrf",
+			"TEST_LIST_EMPTY": "",
+			"NOT_PREFIXED": "yes"
+		})
+		let subEnv = testEnv.prefixed("TEST_LIST_")
+
+		it("returns a new env object", function(){
+			assert(subEnv instanceof env)
+		})
+
+		it("contains all prefixed values", function(){
+			assert(subEnv.has("NORM"))
+			assert(subEnv.has("CSTM"))
+			assert(subEnv.has("NONE"))
+			assert(subEnv.has("EMPTY"))
+		})
+
+		it("contains no other values", function(){
+			assert(!subEnv.has("NOT_PREFIXED"))
+		})
+	})
 })
