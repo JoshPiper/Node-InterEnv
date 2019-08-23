@@ -1,5 +1,5 @@
 {
-  "name": "interenv",
+  "name": "@doctor_internet/interenv",
   "version": "0.2.0",
   "description": "Environment Handling.",
   "main": "env.js",
@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://git.doctor-internet.dev/internet/node-interenv.git"
+    "url": "https://git.doctor-internet.dev/internet/node-interenv"
   },
   "dependencies": {
     "dotenv": "^8.1.0",
