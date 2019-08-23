@@ -1,6 +1,6 @@
 class env {
 	/**
-	 * Create an enviromental specification with the given enviroment vars.
+	 * Create an environmental specification with the given environment vars.
 	 * @param env true to load from .env file, string to load from specific path, object to use object and any other to use empty object.
 	 */
 	constructor(env = false){
