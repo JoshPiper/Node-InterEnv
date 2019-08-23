@@ -5,10 +5,9 @@ class env {
 	 */
 	constructor(env = false){
 		if (env === true){
-			env = require("dotenv-expand")(require("dotenv").config({debug: false}))
-			console.log(env)
+			env = require("dotenv-expand")(require("dotenv").config({debug: false})).parsed
 		} else if (typeof env === "string"){
-			env = require("dotenv-expand")(require("dotenv").config({path: env}))
+			env = require("dotenv-expand")(require("dotenv").config({debug: false, path: env})).parsed
 		} else if (typeof env !== "object"){
 			env = {}
 		}
