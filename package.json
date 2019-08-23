@@ -1,10 +1,11 @@
 {
   "name": "@doctor_internet/interenv",
   "version": "0.2.0",
-  "description": "Environment Handling.",
+  "description": "A simple environment processing system.",
   "main": "env.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "readme": "common-readme > README.md"
   },
   "keywords": [],
   "author": "Joshua Piper",
@@ -18,6 +19,7 @@
     "dotenv-expand": "^5.1.0"
   },
   "devDependencies": {
+    "common-readme": "^1.1.0",
     "mocha": "^6.2.0"
   }
 }
