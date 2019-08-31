@@ -15,7 +15,6 @@
     "url": "https://git.doctor-internet.dev/internet/node-interenv"
   },
   "dependencies": {
-    "dotenv": "^8.1.0",
     "dotenv-expand": "^5.1.0"
   },
   "devDependencies": {

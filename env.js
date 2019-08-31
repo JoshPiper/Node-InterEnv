@@ -1,26 +1,31 @@
-const dotenv = require("dotenv")
 const dotenvexpand = require("dotenv-expand")
 
 class env {
 	/**
 	 * Create an environmental specification with the given environment vars.
-	 * @param envPath true to load from .env file, string to load from specific path, object to use object and any other to use empty object.
-	 * @param literal If the envPath should be treated as the literal environment object.
+	 * @param settings
 	 */
-	constructor(envPath = false, literal = false){
-		if (literal){
-			this.env = envPath
-		} else if (envPath === true){
-			dotenvexpand(dotenv.config({debug: false}))
-		} else if (typeof envPath === "string"){
-			dotenvexpand(dotenv.config({debug: false, path: envPath}))
-		} else if (typeof envPath === "object"){
-			dotenvexpand({parsed: envPath})
+	constructor(settings = {env: {}, expand: false, save: false, overwrite: false, normalize: false}){
+		let {env, expand, overwrite, normalize} = settings
+
+		this.settings = settings
+		delete this.settings.env
+
+		if (env && typeof env === "object"){
+			this.env = env
+		} else {
+			this.env = {}
 		}
 
-		if (!literal){
-			this.env = process.env
+		if (expand){
+			dotenvexpand({ignoreProcessEnv: true, parsed: this.env})
 		}
+
+		if (normalize){
+			this.normalize()
+		}
+
+		this.save()
 	}
 
 	/**
