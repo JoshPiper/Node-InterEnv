@@ -6,7 +6,7 @@ class env {
 	 * @param settings
 	 */
 	constructor(settings = {env: {}, expand: false, save: false, overwrite: false, normalize: false}){
-		let {env, expand, overwrite, normalize} = settings
+		let {env, expand, normalize} = settings
 
 		this.settings = settings
 		delete this.settings.env
@@ -187,6 +187,10 @@ class env {
 		return new env({env: out, save: false, overwrite: false})
 	}
 
+	/**
+	 * Fetch a normalized environment name.
+	 * @returns {string}
+	 */
 	env(){
 		let env = (this.has("NODE_ENV") ? this.raw("NODE_ENV") : "development").toLowerCase()
 
@@ -208,18 +212,34 @@ class env {
 		}
 	}
 
+	/**
+	 * Checks if the current environment is a development env.
+	 * @returns {boolean}
+	 */
 	isDevelopment(){
 		return this.env() === "development"
 	}
 
+	/**
+	 * Checks if the current environment is a testing env.
+	 * @returns {boolean}
+	 */
 	isTesting(){
 		return this.env() === "testing"
 	}
 
+	/**
+	 * Checks if the current environment is a staging env.
+	 * @returns {boolean}
+	 */
 	isStaging(){
 		return this.env() === "staging"
 	}
 
+	/**
+	 * Checks if the current environment is a production env.
+	 * @returns {boolean}
+	 */
 	isProduction(){
 		return this.env() === "production"
 	}
