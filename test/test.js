@@ -22,9 +22,9 @@ describe("env", function(){
 	})
 
 	describe("has()", function(){
-		let testEnv  = new env({
+		let testEnv  = new env({env: {
 			"NODE_ENV": "test"
-		}, true)
+		}})
 
 		it("returns true when a key is set", function(){
 			assert(testEnv.has("NODE_ENV"))
@@ -35,10 +35,10 @@ describe("env", function(){
 	})
 
 	describe("raw()", function(){
-		let testEnv = new env({
+		let testEnv = new env({env: {
 			"NODE_ENV": "test",
 			"TEST_INT": "12"
-		}, true)
+		}})
 
 		it("returns the value if set", function(){
 			assert.strictEqual(testEnv.raw("NODE_ENV"), "test")
@@ -53,12 +53,12 @@ describe("env", function(){
 	})
 
 	describe("int()", function(){
-		let testEnv = new env({
+		let testEnv = new env({env: {
 			"NODE_ENV": "test",
 			"TEST_INT": "12",
 			"TEST_FLOAT": "12.7",
 			"TEST_STRING": "asd"
-		}, true)
+		}})
 
 		it("returns the value if set", function(){
 			assert.strictEqual(testEnv.int("TEST_INT"), 12)
@@ -80,47 +80,39 @@ describe("env", function(){
 	})
 
 	describe("float()", function(){
+		let testEnv = new env({env: {
+			"NODE_ENV": "test",
+			"TEST_INT": "12",
+			"TEST_FLOAT": "12.7",
+			"TEST_STRING": "asd"
+		}})
+
 		it("returns the value if set", function(){
-			let x = new env({
-				"TEST_INT": "12"
-			}, true)
-			assert.strictEqual(x.float("TEST_INT"), 12)
+			assert.strictEqual(testEnv.float("TEST_FLOAT"), 12.7)
 		})
 		it("returns null if the value is not", function(){
-			let x = new env({
-				"TEST_INT": "12"
-			}, true)
-			assert.strictEqual(x.float("BIG_DICK_420"), null)
+			assert.strictEqual(testEnv.float("BIG_DICK_420"), null)
 		})
 		it("returns null for NaN values", function(){
-			let x = new env({
-				"TEST_INT": "asd"
-			}, true)
-			assert.strictEqual(x.float("TEST_INT"), null)
+			assert.strictEqual(testEnv.float("TEST_STRING"), null)
 		})
-		it("performs type coercion to int", function(){
-			let x = new env({
-				"TEST_INT": "12"
-			}, true)
-			assert.strictEqual(x.float("TEST_INT"), 12)
-			assert.strictEqual(typeof x.float("TEST_INT"), "number")
+		it("performs type coercion to number", function(){
+			assert.strictEqual(testEnv.float("TEST_INT"), 12)
+			assert.strictEqual(typeof testEnv.float("TEST_INT"), "number")
 		})
 		it("doesn't truncate floats", function(){
-			let x = new env({
-				"TEST_INT": "12.7"
-			}, true)
-			assert.strictEqual(x.float("TEST_INT"), 12.7)
-			assert.strictEqual(typeof x.float("TEST_INT"), "number")
+			assert.strictEqual(testEnv.float("TEST_FLOAT"), 12.7)
+			assert.strictEqual(typeof testEnv.float("TEST_FLOAT"), "number")
 		})
 	})
 
 	describe("list()", function(){
-		let testEnv = new env({
+		let testEnv = new env({env: {
 			"TEST_LIST_NORM": "abc,efg",
 			"TEST_LIST_CSTM": "abc|efg|hij",
 			"TEST_LIST_NONE": "qrf",
 			"TEST_LIST_EMPTY": "",
-		})
+		}})
 
 		it("returns an array if set", function(){
 			let testList = testEnv.list("TEST_LIST_EMPTY")
@@ -147,13 +139,13 @@ describe("env", function(){
 	})
 
 	describe("prefixed()", function(){
-		let testEnv = new env({
+		let testEnv = new env({env: {
 			"TEST_LIST_NORM": "abc,efg",
 			"TEST_LIST_CSTM": "abc|efg|hij",
 			"TEST_LIST_NONE": "qrf",
 			"TEST_LIST_EMPTY": "",
 			"NOT_PREFIXED": "yes"
-		})
+		}})
 		let subEnv = testEnv.prefixed("TEST_LIST_")
 
 		it("returns a new env object", function(){
