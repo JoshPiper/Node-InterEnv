@@ -24,6 +24,76 @@ class env {
 	}
 
 	/**
+	 * Performs an in-place normalization of keys.
+	 */
+	normalize(){
+		for (let key of Object.keys(this.env)){
+			let value = this.env[key]
+			let nKey = key.toUpperCase()
+			this.env[nKey] = value
+			delete this.env[key]
+		}
+	}
+
+	/**
+	 * Saves and optionally overwrites data in the process.env from this env handler.
+	 */
+	save(){
+		if (!this.settings.save){return}
+
+		for (let [key, value] of Object.entries(this.env)){
+			if (process.env[key] === undefined || this.settings.overwrite){
+				process.env[key] = value
+			}
+		}
+	}
+
+	/**
+	 * Returns a flattened
+	 * @param joiner string to use to join key parts.
+	 * @param data Data subset to use, defaults to the object's env
+	 * @param prefix String key prefix to apply.
+	 * @param out Current set of result data.
+	 */
+	flatten(joiner = "_", data = this.env, prefix = "", out = {}){
+		for (let [key, value] of Object.entries(process)){
+			if (typeof value === "object"){
+				this.flatten(joiner, value, prefix + key + joiner, out)
+			} else {
+				out[prefix + key] = value
+			}
+		}
+
+		return out
+	}
+
+	/**
+	 * Return nested objects formed by splitting the keys.
+	 * @param separator String to split keys on.
+	 */
+	rise(separator = "_"){
+		let out = {}
+		let current
+
+		for (let [key, value] of Object.entries(this.env)){
+			let parts = key.split(separator)
+			current = out
+			while (parts.length > 1){
+				let next = parts.shift()
+				if (current[next] === undefined){
+					current[next] = {}
+				}
+
+				current = out[next]
+			}
+			current[parts.shift()] = value
+		}
+
+		return out
+	}
+
+
+	/**
 	 * Checks a given env var is stored inside this env representation.
 	 * @param key
 	 * @returns {boolean}
