@@ -174,17 +174,17 @@ class env {
 	 */
 	prefixed(prefix){
 		let out = {}
-		let leng = prefix.length
+		let len = prefix.length
 
-		for (let key in this.env){
+		for (let [key, value] of Object.entries(this.env)){
 			key = String(key)
 			if (key.startsWith(prefix)){
-				let outKey = key.slice(leng)
-				out[outKey] = this.env[key]
+				let outKey = key.slice(len)
+				out[outKey] = value
 			}
 		}
 
-		return new env(out, true)
+		return new env({env: out, save: false, overwrite: false})
 	}
 
 	env(){
