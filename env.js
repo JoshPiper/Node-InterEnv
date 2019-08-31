@@ -186,6 +186,43 @@ class env {
 
 		return new env(out, true)
 	}
+
+	env(){
+		let env = (this.has("NODE_ENV") ? this.raw("NODE_ENV") : "development").toLowerCase()
+
+		switch (env){
+			default: return env
+			case "dev":
+			case "development":
+				return "development"
+			case "test":
+			case "testing":
+				return "testing"
+			case "stage":
+			case "staging":
+				return "staging"
+			case "prod":
+			case "production":
+			case "live":
+				return "production"
+		}
+	}
+
+	isDevelopment(){
+		return this.env() === "development"
+	}
+
+	isTesting(){
+		return this.env() === "testing"
+	}
+
+	isStaging(){
+		return this.env() === "staging"
+	}
+
+	isProduction(){
+		return this.env() === "production"
+	}
 }
 
 module.exports = env
