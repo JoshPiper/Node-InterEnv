@@ -9,15 +9,15 @@ InterEnv is designed to make that as painless as possible with a unified API and
 
 ```js
 const Handler = require('@doctor_internet/interenv')
-let env = new Handler(process.env) // Simply wrap process.env
+let env = new Handler({env: process.env}) // Simply wrap process.env
 
-console.log(env.raw("NODE_ENV"))
+console.log(env.env())
 ```
 
 outputs
 
 ```
-test
+testing
 ```
 
 or whatever your env is set to.
