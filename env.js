@@ -62,7 +62,7 @@ class env {
 	 * @param out Current set of result data.
 	 */
 	flatten(joiner = "_", data = this.env, prefix = "", out = {}){
-		for (let [key, value] of Object.entries(process)){
+		for (let [key, value] of Object.entries(data)){
 			if (typeof value === "object"){
 				this.flatten(joiner, value, prefix + key + joiner, out)
 			} else {
