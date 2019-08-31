@@ -1,6 +1,6 @@
 {
   "name": "@doctor_internet/interenv",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A simple environment processing system.",
   "main": "env.js",
   "scripts": {
