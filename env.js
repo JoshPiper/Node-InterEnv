@@ -22,6 +22,7 @@ class env {
 		}
 
 		if (normalize){
+			this.env = this.flatten()
 			this.normalize()
 		}
 
