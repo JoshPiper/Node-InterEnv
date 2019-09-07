@@ -1,9 +1,19 @@
 const dotenvexpand = require("dotenv-expand")
 
+/**
+ * Basic Environment Settings.
+ * @typedef {Object} EnvSettings
+ * @property {object} env - The internal data to be stored in the env handler.
+ * @property {boolean} [expand] - If var references inside the data store should be expanded.
+ * @property {boolean} [save] - If internal data objects should be saved to process.env
+ * @property {boolean} [overwrite] - If save is true, if process.env existing keys should be overwritten.
+ * @property {boolean} [normalize] - If internal structures should be flattened and keys normalized.
+ */
+
 class env {
 	/**
 	 * Create an environmental specification with the given environment vars.
-	 * @param settings
+	 * @param {EnvSettings} settings
 	 */
 	constructor(settings = {env: {}, expand: false, save: false, overwrite: false, normalize: false}){
 		let {env, expand, normalize} = settings
