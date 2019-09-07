@@ -8,5 +8,10 @@ let envObj = {
 	TEST_FLOAT: "${TEST_INT}.7"
 }
 
-let env = new EnvHandler({env: envObj})
-console.log(env.raw("NODE_ENV"))
+let env = new EnvHandler({
+	env: envObj,
+	expand: true
+})
+
+console.log(env.isTesting())
+console.log(env.raw("TEST_FLOAT"))
