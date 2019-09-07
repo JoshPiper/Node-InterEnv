@@ -9,9 +9,13 @@ InterEnv is designed to make that as painless as possible with a unified API and
 
 ```js
 const Handler = require('@doctor_internet/interenv')
-let env = new Handler({env: process.env}) // Simply wrap process.env
 
-console.log(env.env())
+// Simply wrap process.env
+let env = new Handler({
+    env: process.env
+})
+
+console.log(env.environment())
 ```
 
 outputs
@@ -31,11 +35,14 @@ The functions raw, int, float and list are used to pull raw values, integers, fl
 ```js
  const Handler = require('@doctor_internet/interenv')
  let env = new Handler({
-    NODE_ENV: "test",
-    TEST_INT: "3",
-    TEST_FLOAT: "5.7",
-    TEST_LIST: "this,is,a,csv,list"
-})
+    env: {
+        NODE_ENV: "test",
+        TEST_INT: "3",
+        TEST_FLOAT: "5.7",
+        TEST_LIST: "this,is,a,csv,list"    
+    }
+ })
+
 console.log(env.raw("NODE_ENV")) // string: "test"
 console.log(env.int("TEST_INT")) // number: 3
 console.log(env.float("TEST_FLOAT")) // number: 5.7
@@ -59,6 +66,7 @@ For specific use cases, such as fetching only DB vars, prefixing can be used.
 
 let subEnv = env.prefixed("DB_")
 console.log(subEnv.raw("HOST")) // string: "example.com"
+console.log(subEnv.has("NODE_ENV")) // bool: false
 ```
 
 ## Install
