@@ -201,7 +201,7 @@ class env {
 	 * Fetch a normalized environment name.
 	 * @returns {string}
 	 */
-	env(){
+	environment(){
 		let env = (this.has("NODE_ENV") ? this.raw("NODE_ENV") : "development").toLowerCase()
 
 		switch (env){
@@ -227,7 +227,7 @@ class env {
 	 * @returns {boolean}
 	 */
 	isDevelopment(){
-		return this.env() === "development"
+		return this.environment() === "development"
 	}
 
 	/**
@@ -235,7 +235,7 @@ class env {
 	 * @returns {boolean}
 	 */
 	isTesting(){
-		return this.env() === "testing"
+		return this.environment() === "testing"
 	}
 
 	/**
@@ -243,7 +243,7 @@ class env {
 	 * @returns {boolean}
 	 */
 	isStaging(){
-		return this.env() === "staging"
+		return this.environment() === "staging"
 	}
 
 	/**
@@ -251,8 +251,15 @@ class env {
 	 * @returns {boolean}
 	 */
 	isProduction(){
-		return this.env() === "production"
+		return this.environment() === "production"
 	}
+
+	/**
+	 * Returns the current environment.
+	 * @see environment()
+	 * @returns {string}
+	 */
+	env(){return this.environment()}
 }
 
 module.exports = env
