@@ -1,6 +1,6 @@
 {
   "name": "@doctor_internet/interenv",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A simple environment processing system.",
   "main": "env.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://git.doctor-internet.dev/internet/node-interenv"
+    "url": "https://git.doctor-internet.dev/internode/interenv"
   },
   "dependencies": {
     "dotenv-expand": "^5.1.0"
