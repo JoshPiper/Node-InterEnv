@@ -4,8 +4,7 @@
 	"compilerOptions": {
 		"declaration": true
 	},
-	"include": [
-		"index.ts",
-		"lib/**/*"
+	"files": [
+		"index.ts"
 	]
 }
