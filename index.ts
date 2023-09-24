@@ -1,38 +1,27 @@
-const dotenvexpand = require("dotenv-expand")
+import {EnvironValue, FlatEnviron, NestedEnviron, Environ, Settings, Configuration} from './types'
 
-/**
- * Basic Environment Settings.
- * @typedef {Object} EnvSettings
- * @property {object} env - The internal data to be stored in the env handler.
- * @property {boolean} [expand] - If var references inside the data store should be expanded.
- * @property {boolean} [save] - If internal data objects should be saved to process.env
- * @property {boolean} [overwrite] - If save is true, if process.env existing keys should be overwritten.
- * @property {boolean} [normalize] - If internal structures should be flattened and keys normalized.
- */
+export default class Environment {
+	private settings: Settings;
+	private environ: Environ;
 
-class env {
 	/**
 	 * Create an environmental specification with the given environment vars.
-	 * @param {EnvSettings} settings
+	 * @param {Configuration} configuration
 	 */
-	constructor(settings = {env: {}, expand: false, save: false, overwrite: false, normalize: false}){
-		let {env, expand, normalize} = settings
+	constructor(configuration: Configuration = {env: {}, expand: false, save: false, overwrite: false, normalize: false}){
+		let {env, expand, normalize} = configuration
 
-		this.settings = settings
-		delete this.settings.env
+		delete configuration.env
+		this.settings = configuration
 
-		if (env && typeof env === "object"){
-			this.env = env
+		if (env !== undefined){
+			this.environ = env
 		} else {
-			this.env = {}
-		}
-
-		if (expand){
-			dotenvexpand({ignoreProcessEnv: true, parsed: this.env})
+			this.environ = {}
 		}
 
 		if (normalize){
-			this.env = this.flatten()
+			this.environ = this.flatten()
 			this.normalize()
 		}
 
@@ -43,11 +32,11 @@ class env {
 	 * Performs an in-place normalization of keys.
 	 */
 	normalize(){
-		for (let key of Object.keys(this.env)){
-			let value = this.env[key]
+		for (let key of Object.keys(this.environ)){
+			let value = this.environ[key]
 			let nKey = key.toUpperCase()
-			this.env[nKey] = value
-			delete this.env[key]
+			this.environ[nKey] = value
+			delete this.environ[key]
 		}
 	}
 
@@ -57,7 +46,7 @@ class env {
 	save(){
 		if (!this.settings.save){return}
 
-		for (let [key, value] of Object.entries(this.env)){
+		for (let [key, value] of Object.entries(this.environ)){
 			if (process.env[key] === undefined || this.settings.overwrite){
 				process.env[key] = value
 			}
@@ -71,9 +60,9 @@ class env {
 	 * @param prefix String key prefix to apply.
 	 * @param out Current set of result data.
 	 */
-	flatten(joiner = "_", data = this.env, prefix = "", out = {}){
+	flatten(joiner = "_", data = this.environ, prefix = "", out: Environ = {}): FlatEnviron {
 		for (let [key, value] of Object.entries(data)){
-			if (typeof value === "object"){
+			if (value instanceof Object){
 				this.flatten(joiner, value, prefix + key + joiner, out)
 			} else {
 				out[prefix + key] = value
@@ -87,22 +76,27 @@ class env {
 	 * Return nested objects formed by splitting the keys.
 	 * @param separator String to split keys on.
 	 */
-	rise(separator = "_"){
-		let out = {}
+	rise(separator = "_"): NestedEnviron {
+		let out: Environ = {}
 		let current
 
 		for (let [key, value] of Object.entries(this.env)){
 			let parts = key.split(separator)
+
 			current = out
 			while (parts.length > 1){
-				let next = parts.shift()
+				let next = parts.shift()!
+
 				if (current[next] === undefined){
 					current[next] = {}
 				}
 
 				current = out[next]
 			}
-			current[parts.shift()] = value
+
+			if (parts.length === 1){
+				current[parts.shift()!] = value
+			}
 		}
 
 		return out
@@ -114,17 +108,17 @@ class env {
 	 * @param key
 	 * @returns {boolean}
 	 */
-	has(key){
-		return this.env[key] !== undefined
+	has(key: string): boolean {
+		return this.environ[key] !== undefined
 	}
 
 	/**
 	 * Return a raw env var from the table.
 	 * @param key
-	 * @returns {?*}
+	 * @returns {?any}
 	 */
-	raw(key){
-		return this.has(key) ? this.env[key] : null
+	raw(key: string): any {
+		return this.has(key) ? this.environ[key] : null
 	}
 
 	/**
@@ -133,12 +127,12 @@ class env {
 	 * @param radix
 	 * @returns {null|number}
 	 */
-	int(key, radix=0){
+	int(key: string, radix: number= 0): number | null {
 		if (!this.has(key)){
 			return null
 		}
 
-		let out = parseInt(this.env[key], radix)
+		let out = parseInt(this.raw(key), radix)
 		if (isNaN(out)){
 			return null
 		}
@@ -151,12 +145,12 @@ class env {
 	 * @param key
 	 * @returns {null|number}
 	 */
-	float(key){
+	float(key: string): number | null {
 		if (!this.has(key)){
 			return null
 		}
 
-		let out = parseFloat(this.env[key])
+		let out = parseFloat(this.raw(key))
 		if (isNaN(out)){
 			return null
 		}
@@ -169,12 +163,12 @@ class env {
 	 * @param key
 	 * @param sep
 	 */
-	list(key, sep=","){
+	list(key: string, sep: string = ","): string[] {
 		if (!this.has(key)){
 			return []
 		}
 
-		return String(this.env[key]).split(sep)
+		return String(this.raw(key)).split(sep)
 	}
 
 	/**
@@ -182,8 +176,8 @@ class env {
 	 * @param prefix
 	 * @return env
 	 */
-	prefixed(prefix){
-		let out = {}
+	prefixed(prefix: string): Environment {
+		let out: Environ = {}
 		let len = prefix.length
 
 		for (let [key, value] of Object.entries(this.env)){
@@ -194,15 +188,15 @@ class env {
 			}
 		}
 
-		return new env({env: out, save: false, overwrite: false})
+		return new Environment({env: out, save: false, overwrite: false})
 	}
 
 	/**
 	 * Fetch a normalized environment name.
 	 * @returns {string}
 	 */
-	environment(){
-		let env = (this.has("NODE_ENV") ? this.raw("NODE_ENV") : "development").toLowerCase()
+	environment(): string {
+		let env = String(this.raw("NODE_ENV") ?? "development").toLowerCase()
 
 		switch (env){
 			default: return env
@@ -226,7 +220,7 @@ class env {
 	 * Checks if the current environment is a development env.
 	 * @returns {boolean}
 	 */
-	isDevelopment(){
+	isDevelopment(): boolean {
 		return this.environment() === "development"
 	}
 
@@ -234,7 +228,7 @@ class env {
 	 * Checks if the current environment is a testing env.
 	 * @returns {boolean}
 	 */
-	isTesting(){
+	isTesting(): boolean {
 		return this.environment() === "testing"
 	}
 
@@ -242,7 +236,7 @@ class env {
 	 * Checks if the current environment is a staging env.
 	 * @returns {boolean}
 	 */
-	isStaging(){
+	isStaging(): boolean {
 		return this.environment() === "staging"
 	}
 
@@ -250,16 +244,15 @@ class env {
 	 * Checks if the current environment is a production env.
 	 * @returns {boolean}
 	 */
-	isProduction(){
+	isProduction(): boolean {
 		return this.environment() === "production"
 	}
 
 	/**
 	 * Returns the current environment.
 	 * @see environment()
-	 * @returns {string}
 	 */
-	env(){return this.environment()}
+	env(){
+		return this.environment()
+	}
 }
-
-module.exports = env

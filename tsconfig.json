@@ -2,9 +2,7 @@
 	"extends": "@tsconfig/node-lts/tsconfig.json",
 
 	"compilerOptions": {
-		"declaration": true,
-		"allowJs": true,
-		"outDir": "dist"
+		"declaration": true
 	},
 	"include": [
 		"index.ts",
