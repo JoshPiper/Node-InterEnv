@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "readme": "common-readme > README.md",
-    "release": "npx semantic-release"
+    "release": "npx semantic-release",
+    "dev": "npx tsc --watch"
   },
   "keywords": [],
   "author": "Joshua Piper",
@@ -19,8 +20,11 @@
     "dotenv-expand": "^5.1.0"
   },
   "devDependencies": {
+    "@tsconfig/node-lts": "^18.12.5",
+    "@types/node": "^20.6.5",
     "common-readme": "^1.1.0",
     "mocha": "^6.2.3",
-    "semantic-release": "^22.0.1"
+    "semantic-release": "^22.0.1",
+    "typescript": "^5.2.2"
   }
 }
