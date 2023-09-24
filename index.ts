@@ -1,4 +1,4 @@
-import {EnvironValue, FlatEnviron, NestedEnviron, Environ, Settings, Configuration} from './types'
+import {FlatEnviron, NestedEnviron, Environ, Settings, Configuration} from './types'
 
 export default class Environment {
 	private settings: Settings;
