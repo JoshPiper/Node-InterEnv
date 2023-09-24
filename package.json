@@ -5,7 +5,8 @@
   "main": "env.js",
   "scripts": {
     "test": "mocha",
-    "readme": "common-readme > README.md"
+    "readme": "common-readme > README.md",
+    "release": "npx semantic-release"
   },
   "keywords": [],
   "author": "Joshua Piper",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "common-readme": "^1.1.0",
-    "mocha": "^6.2.3"
+    "mocha": "^6.2.3",
+    "semantic-release": "^22.0.1"
   }
 }
