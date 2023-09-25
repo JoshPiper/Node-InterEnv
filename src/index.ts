@@ -1,8 +1,8 @@
 import iEnvironment from './types'
 
-import UnableToConvertNumberException from "./src/errors/UnableToConvertNumberException";
-import EnvironmentVariableNotFoundException from "./src/errors/EnvironmentVariableNotFoundException";
-import UnableToConvertBooleanException from "./src/errors/UnableToConvertBooleanException";
+import UnableToConvertNumberException from "./errors/UnableToConvertNumberException";
+import EnvironmentVariableNotFoundException from "./errors/EnvironmentVariableNotFoundException";
+import UnableToConvertBooleanException from "./errors/UnableToConvertBooleanException";
 import Dict = NodeJS.Dict;
 
 const IS_WIN = process.platform === "win32"

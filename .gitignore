@@ -3,6 +3,6 @@
 
 package-lock.json
 
-index.d.ts
-types.d.ts
-index.js
+*.d.ts
+!src/types.d.ts
+*.js
