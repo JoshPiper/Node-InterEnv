@@ -28,7 +28,7 @@
     "@types/node": "^20.6.5",
     "common-readme": "^1.1.0",
     "mocha": "^6.2.3",
-    "semantic-release": "^22.0.1",
+    "semantic-release": "^22.0.5",
     "typescript": "^5.2.2"
   },
 
