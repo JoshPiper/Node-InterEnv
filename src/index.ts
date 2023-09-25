@@ -75,7 +75,7 @@ class Environment {
 	constructor(environment: iEnvironment = process.env, prefix: string = "", normalize_keys: boolean = false){
 		this.environ = environment
 		this.prefix = prefix
-		this.normalize_keys = !IS_WIN && normalize_keys
+		this.normalize_keys = (!IS_WIN || environment !== process.env) && normalize_keys
 	}
 
 	/**
