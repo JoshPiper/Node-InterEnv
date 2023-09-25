@@ -256,6 +256,13 @@ class Environment {
 	}
 	get_csv = this.csv
 
+	/**
+	 * Create a new environment which only contains keys with a given prefix.
+	 * @param {string} prefix
+	 */
+	prefixed(prefix: string): Environment {
+		return new Environment(this.environ, `${this.prefix}${prefix}`, this.normalize_keys)
+	}
 
 
 	// prefixed(prefix: string): Environment {
