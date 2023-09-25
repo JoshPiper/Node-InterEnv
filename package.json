@@ -21,7 +21,7 @@
     "url": "https://github.com/JoshPiper/Node-InterEnv.git"
   },
   "dependencies": {
-    "dotenv-expand": "^5.1.0"
+    "dotenv-expand": "^10.0.0"
   },
   "devDependencies": {
     "@tsconfig/node-lts": "^18.12.5",
