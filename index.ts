@@ -1,6 +1,6 @@
 import {FlatEnviron, NestedEnviron, Environ, Settings, Configuration} from './types'
 
-export default class Environment {
+class Environment {
 	private settings: Settings;
 	private environ: Environ;
 
@@ -266,3 +266,5 @@ export default class Environment {
 		return this.environment()
 	}
 }
+
+export = Environment
