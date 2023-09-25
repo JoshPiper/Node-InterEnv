@@ -70,7 +70,7 @@ class Environment {
 	 * Construct a new environmental instance.
 	 * @param {iEnvironment} environment Environmental dictionary to use. Defaults to process.env.
 	 * @param {string} prefix Key prefix to filter by.
-	 * @param {boolean} normalize_keys Whether fetching keys should be case-insensitive. On Windows, this occurs natively and cannot be disabled.
+	 * @param {boolean} normalize_keys Whether fetching keys should be case-insensitive. When using process.env on Windows, this occurs natively and cannot be disabled.
 	 */
 	constructor(environment: iEnvironment = process.env, prefix: string = "", normalize_keys: boolean = false){
 		this.environ = environment
