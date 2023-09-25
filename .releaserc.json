@@ -1,8 +1,7 @@
 {
 	"branches": [
 		"master",
-		"main",
-		{"name": "refactor/typescript", "channel": "beta", "prerelease": "beta"}
+		"main"
 	],
 	"plugins": [
 		"@semantic-release/commit-analyzer",
