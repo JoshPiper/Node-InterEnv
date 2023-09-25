@@ -8,7 +8,6 @@
     "release": "npx semantic-release",
     "dev": "npx tsc --watch",
     "prod": "npx tsc",
-
     "clean": "rm index.js index.d.ts 2>/dev/null || true",
     "build": "npm run clean && npm run prod",
     "prepack": "npm run build"
@@ -31,7 +30,6 @@
     "semantic-release": "^22.0.1",
     "typescript": "^5.2.2"
   },
-
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
