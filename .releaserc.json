@@ -1,7 +1,10 @@
 {
 	"branches": [
-		"master",
-		"main"
+		"main",
+		{
+			"name": "refactor/rewrite",
+			"prerelease": "alpha"
+		}
 	],
 	"plugins": [
 		"@semantic-release/commit-analyzer",
