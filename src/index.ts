@@ -264,22 +264,22 @@ class Environment {
 		return new Environment(this.environ, `${this.prefix}${prefix}`, this.normalize_keys)
 	}
 
+	/**
+	 * Fetch all environment variables from this environment.
+	 * If the environment is prefixed, the output does *NOT* include the prefix.
+	 * Entries in this output are copied by value during the process, and will not live update if the environment changes.
+	 * @returns {Dict<string>}
+	 */
+	all(): Dict<string> {
+		return Object.fromEntries(
+			Object.entries(this.environ)
+				.filter(([key, _]) => key.startsWith(this.prefix))
+				.map(([key, value]) => {
+					return [key.substring(this.prefix.length), value]
+				})
+		)
+	}
 
-	// prefixed(prefix: string): Environment {
-	// 	let out: Environ = {}
-	// 	let len = prefix.length
-	//
-	// 	for (let [key, value] of Object.entries(this.env)){
-	// 		key = String(key)
-	// 		if (key.startsWith(prefix)){
-	// 			let outKey = key.slice(len)
-	// 			out[outKey] = value
-	// 		}
-	// 	}
-	//
-	// 	return new Environment({env: out, save: false, overwrite: false})
-	// }
-	//
 	// /**
 	//  * Fetch a normalized environment name.
 	//  * @returns {string}
