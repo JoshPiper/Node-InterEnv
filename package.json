@@ -30,11 +30,17 @@
     "semantic-release": "^22.0.1",
     "typescript": "^5.2.2"
   },
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "files": [
-    "index.js",
-    "index.d.ts",
-    "types.d.ts"
+    "src/index.js",
+    "src/index.d.ts",
+    "src/errors/EnvironmentVariableNotFoundException.js",
+    "src/errors/EnvironmentVariableNotFoundException.d.ts",
+    "src/errors/UnableToConvertBooleanException.js",
+    "src/errors/UnableToConvertBooleanException.d.ts",
+    "src/errors/UnableToConvertNumberException.js",
+    "src/errors/UnableToConvertNumberException.d.ts",
+    "src/types.d.ts"
   ]
 }
