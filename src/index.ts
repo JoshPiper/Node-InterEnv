@@ -86,7 +86,7 @@ class Environment {
 	 * @returns {string | undefined}
 	 * @protected
 	 */
-	protected original_key(key: string): string | undefined {
+	protected originalKey(key: string): string | undefined {
 		key = this.normalize(key)
 		if (!this.normalize_keys){
 			return key
@@ -115,7 +115,7 @@ class Environment {
 	 * @returns {boolean}
 	 */
 	has(key: string): boolean {
-		const orig_key = this.original_key(key)
+		const orig_key = this.originalKey(key)
 		if (orig_key === undefined){
 			return false
 		}
@@ -135,7 +135,7 @@ class Environment {
 	get<FB extends PossibleValue = undefined>(key: string, fallback: FB): string | FB;
 	get(key: string, fallback?: FallbackValue): PossibleValue;
 	get(key: string, fallback: FallbackValue = undefined): PossibleValue {
-		const orig_key = this.original_key(key)
+		const orig_key = this.originalKey(key)
 		if (orig_key === undefined){
 			if (fallback === RaiseException){
 				throw new EnvironmentVariableNotFoundException(this.normalize(key))
@@ -180,8 +180,8 @@ class Environment {
 
 		return parsed
 	}
-	get_int = this.int
-	get_integer = this.int
+	getInt = this.int
+	getInteger = this.int
 
 	/**
 	 * Fetch an environment variable and convert it to an float.
@@ -205,7 +205,7 @@ class Environment {
 
 		return parsed
 	}
-	get_float = this.float
+	getFloat = this.float
 
 	/**
 	 * Fetch an environment variable and convert it to a boolean.
@@ -226,8 +226,8 @@ class Environment {
 
 		return bool
 	}
-	get_bool = this.bool
-	get_boolean = this.bool
+	getBool = this.bool
+	getBoolean = this.bool
 
 	/**
 	 * Return an array of strings, exploded from the given environment variable.
@@ -245,7 +245,7 @@ class Environment {
 
 		return value.split(splitter).map(entry => entry.trim()).filter(Boolean)
 	}
-	get_list = this.list
+	getList = this.list
 
 	/**
 	 * Get a CSV list from the environment.
@@ -255,7 +255,7 @@ class Environment {
 	csv(key: string): string[] {
 		return this.list(key, ",")
 	}
-	get_csv = this.csv
+	getCSV = this.csv
 
 	/**
 	 * Create a new environment which only contains keys with a given prefix.
