@@ -280,74 +280,74 @@ class Environment {
 		)
 	}
 
-	// /**
-	//  * Fetch a normalized environment name.
-	//  * @returns {string}
-	//  */
-	// environment(): string {
-	// 	let env = String(this.raw("NODE_ENV") ?? "development").toLowerCase()
-	//
-	// 	switch (env){
-	// 		default: return env
-	// 		case "dev":
-	// 		case "development":
-	// 			return "development"
-	// 		case "test":
-	// 		case "testing":
-	// 			return "testing"
-	// 		case "stage":
-	// 		case "staging":
-	// 			return "staging"
-	// 		case "prod":
-	// 		case "production":
-	// 		case "live":
-	// 			return "production"
-	// 	}
-	// }
-	//
-	// /**
-	//  * Checks if the current environment is a development env.
-	//  * @returns {boolean}
-	//  */
-	// isDevelopment(): boolean {
-	// 	return this.environment() === "development"
-	// }
-	//
-	// /**
-	//  * Checks if the current environment is a testing env.
-	//  * @returns {boolean}
-	//  */
-	// isTesting(): boolean {
-	// 	return this.environment() === "testing"
-	// }
-	//
-	// /**
-	//  * Checks if the current environment is a staging env.
-	//  * @returns {boolean}
-	//  */
-	// isStaging(): boolean {
-	// 	return this.environment() === "staging"
-	// }
-	//
-	// /**
-	//  * Checks if the current environment is a production env.
-	//  * @returns {boolean}
-	//  */
-	// isProduction(): boolean {
-	// 	return this.environment() === "production"
-	// }
-	//
-	// /**
-	//  * Returns the current environment.
-	//  * @see environment()
-	//  */
-	// env(){
-	// 	return this.environment()
-	// }
-	//
-	// test(){
-	// 	console.log(this.environ)
-	// }
+	/**
+	 * Fetch a normalized environment name.
+	 * @returns {string}
+	 */
+	environment(): string {
+		let env = this.get("NODE_ENV", "development").toLowerCase()
+
+		switch (env){
+			default: return env
+			case "dev":
+			case "development":
+				return "development"
+			case "test":
+			case "testing":
+				return "testing"
+			case "stage":
+			case "staging":
+				return "staging"
+			case "prod":
+			case "production":
+			case "live":
+				return "production"
+			case "local":
+			case "localhost":
+				return "local"
+		}
+	}
+	env = this.environment
+
+	/**
+	 * Checks if the current environment is development env.
+	 * @returns {boolean}
+	 */
+	isDevelopment(): boolean {
+		return this.environment() === "development"
+	}
+
+	/**
+	 * Checks if the current environment is testing env.
+	 * @returns {boolean}
+	 */
+	isTesting(): boolean {
+		return this.environment() === "testing"
+	}
+
+	/**
+	 * Checks if the current environment is staging env.
+	 * @returns {boolean}
+	 */
+	isStaging(): boolean {
+		return this.environment() === "staging"
+	}
+
+	/**
+	 * Checks if the current environment is production env.
+	 * @returns {boolean}
+	 */
+	isProduction(): boolean {
+		return this.environment() === "production"
+	}
+
+	/**
+	 * Checks if the current environment is local.
+	 * @returns {boolean}
+	 */
+	isLocal(): boolean {
+		return this.environment() === "local"
+	}
 }
 
 export default Environment
