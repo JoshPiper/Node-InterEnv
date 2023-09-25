@@ -17,6 +17,6 @@ interface Settings {
     overwrite: boolean
     normalize: boolean
 }
-type Configuration = Omit<Settings> & {"env"?: object}
+type Configuration = Partial<Settings> & {"env"?: object}
 
 export {EnvironValue, FlatEnviron, NestedEnviron, Environ, Settings, Configuration}

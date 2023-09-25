@@ -1,2 +1,6 @@
 /.idea/
 /node_modules/
+
+index.d.ts
+types.d.ts
+index.js
