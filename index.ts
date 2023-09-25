@@ -9,9 +9,19 @@ export default class Environment {
 	 * @param {Configuration} configuration
 	 */
 	constructor(configuration: Configuration = {env: {}, expand: false, save: false, overwrite: false, normalize: false}){
-		let {env, expand, normalize} = configuration
-
+		configuration = {
+			...{
+				env: {},
+				expand: false,
+				save: false,
+				overwrite: false,
+				normalize: false
+			},
+			...configuration
+		}
+		let {env, normalize} = configuration
 		delete configuration.env
+		// @ts-ignore
 		this.settings = configuration
 
 		if (env !== undefined){
