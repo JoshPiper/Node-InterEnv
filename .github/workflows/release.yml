@@ -11,13 +11,13 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu, windows ]
-    name: "Run Tests and Coverage (${{ matrix.os }})"
+        test: [ test, examples ]
+    name: "Run Tests and Coverage (${{ matrix.os }} | ${{ matrix.test }})"
     runs-on: "${{ matrix.os }}-latest"
     permissions:
       contents: read
       actions: read
       checks: write
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
       - name: Install Node Dependencies
         run: npm install
       - name: Test
-        run: npm run test
+        run: "npm run ${{ matrix.test }}"
 
   release:
     name: 'Build Release'
