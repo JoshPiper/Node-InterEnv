@@ -213,7 +213,7 @@ class Environment {
 	 * @param key
 	 * @param fallback
 	 */
-	bool(key: string, fallback: FallbackValue): boolean | undefined {
+	bool(key: string, fallback: FallbackValue = undefined): boolean | undefined {
 		const value = this.get(key, fallback)
 		if (value === undefined){
 			return undefined
