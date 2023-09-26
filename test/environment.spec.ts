@@ -1,21 +1,20 @@
 import {assert} from "chai"
-import {Environment, RaiseException, iEnvironment} from "../src/index"
+import {Environment, RaiseException} from "../src/index"
+import { delimiter } from "path"
 
-interface TestEnvironment extends iEnvironment {
-    NODE_ENV: string
-    TEST_INT: string
-    TEST_INT_HEX: string
-    TEST_FLOAT: string
-    TEST_BOOL_ON: string
-    TEST_BOOL_OFF: string
-}
-const test_environment: TestEnvironment = {
+type EnvNameSpec = [string, string, boolean, boolean, boolean, boolean, boolean][]
+
+const test_environment = {
     'NODE_ENV': 'test',
+    'PATH': `path1${delimiter}path2${delimiter}path3`,
+    'TEST_GET': 'value',
     'TEST_INT': '1',
     'TEST_INT_HEX': '0xff',
     'TEST_FLOAT': '1.5',
     'TEST_BOOL_ON': 'on',
-    'TEST_BOOL_OFF': '❌'
+    'TEST_BOOL_OFF': '❌',
+    'TEST_LIST': 'a| b| c| d |e',
+    'TEST_CSV': 'a, b, c, d ,e'
 }
 
 describe('Environment', () => {
@@ -204,6 +203,157 @@ describe('Environment', () => {
             assert.throws(() => {
                 env.bool('TEST_NXT', 'invalid')
             })
+        })
+    })
+
+    describe('#list', () => {
+        it('Returns pipe seperated values', () => {
+            const env = new Environment(test_environment)
+            const value = env.list('TEST_LIST', '|')
+
+            assert.isArray(value)
+            assert.lengthOf(value, 5)
+            assert.deepStrictEqual(value, ['a', 'b', 'c', 'd', 'e'])
+        })
+
+        it('Returns empty lists for non-existant entries', () => {
+            const env = new Environment(test_environment)
+            const value = env.list('TEST_NXT')
+
+            assert.isArray(value)
+            assert.lengthOf(value, 0)
+            assert.deepStrictEqual(value, [])
+        })
+    })
+
+    describe('#csv', () => {
+        it('Returns comma seperated values', () => {
+            const env = new Environment(test_environment)
+            const value = env.csv('TEST_CSV')
+
+            assert.isArray(value)
+            assert.lengthOf(value, 5)
+            assert.deepStrictEqual(value, ['a', 'b', 'c', 'd', 'e'])
+        })
+
+        it('Returns empty lists for non-existant entries', () => {
+            const env = new Environment(test_environment)
+            const value = env.csv('TEST_NXT')
+
+            assert.isArray(value)
+            assert.lengthOf(value, 0)
+            assert.deepStrictEqual(value, [])
+        })
+    })
+
+    describe('#all', () => {
+        it('Returns all entries', () => {
+            const env = new Environment(test_environment)
+            const entries = env.all()
+
+            assert.isObject(entries)
+            assert.lengthOf(Object.entries(entries), Object.entries(test_environment).length)
+            assert.deepStrictEqual(entries, test_environment)
+        })
+    })
+
+    describe('#prefixed', () => {
+        it('Creates a new prefixed environment', () => {
+            const env = (new Environment(test_environment)).prefixed('TEST_')
+
+            assert.strictEqual(env.get('GET'), 'value')
+        })
+        it('Filters all', () => {
+            const entries = (new Environment(test_environment)).prefixed('TEST_').all()
+            assert.hasAnyKeys(entries, ['GET', 'INT', 'INT_HEX'])
+            assert.doesNotHaveAnyKeys(entries, ['NODE_ENV', 'ENV'])
+            assert.lengthOf(Object.entries(entries), Object.entries(test_environment).length - 1)
+        })
+    })
+
+    describe('#environment', () => {
+        const envNames: EnvNameSpec = [
+            ['default', 'default', false, false, false, false, false],
+            ['dev', 'development', true, false, false, false, false],
+            ['development', 'development', true, false, false, false, false],
+            ['test', 'testing', false, true, false, false, false],
+            ['testing', 'testing', false, true, false, false, false],
+            ['stage', 'staging', false, false, true, false, false],
+            ['staging', 'staging', false, false, true, false, false],
+            ['prod', 'production', false, false, false, true, false],
+            ['production', 'production', false, false, false, true, false],
+            ['live', 'production', false, false, false, true, false],
+            ['local', 'local', false, false, false, false, true],
+            ['localhost', 'local', false, false, false, false, true],
+        ]
+        for (let [en, out, id, ite, is, ip, il] of envNames){
+            describe(`(${en})`, () => {
+                it(`Maps to "${out}"`, () => {
+                    assert.strictEqual((new Environment({'NODE_ENV': en})).environment(), out)
+                })
+
+                if (id){
+                    it(`Is a development environment"`, () => {
+                        assert.isTrue((new Environment({'NODE_ENV': en})).isDevelopment())
+                    })
+                } else {
+                    it(`Is not a development environment"`, () => {
+                        assert.isFalse((new Environment({'NODE_ENV': en})).isDevelopment())
+                    })
+                }
+
+                if (ite){
+                    it(`Is a testing environment"`, () => {
+                        assert.isTrue((new Environment({'NODE_ENV': en})).isTesting())
+                    })
+                } else {
+                    it(`Is not a testing environment"`, () => {
+                        assert.isFalse((new Environment({'NODE_ENV': en})).isTesting())
+                    })
+                }
+
+                if (is){
+                    it(`Is a staging environment"`, () => {
+                        assert.isTrue((new Environment({'NODE_ENV': en})).isStaging())
+                    })
+                } else {
+                    it(`Is not a staging environment"`, () => {
+                        assert.isFalse((new Environment({'NODE_ENV': en})).isStaging())
+                    })
+                }
+
+                if (ip){
+                    it(`Is a production environment"`, () => {
+                        assert.isTrue((new Environment({'NODE_ENV': en})).isProduction())
+                    })
+                } else {
+                    it(`Is not a production environment"`, () => {
+                        assert.isFalse((new Environment({'NODE_ENV': en})).isProduction())
+                    })
+                }
+
+                if (il){
+                    it(`Is a local environment"`, () => {
+                        assert.isTrue((new Environment({'NODE_ENV': en})).isLocal())
+                    })
+                } else {
+                    it(`Is not a local environment"`, () => {
+                        assert.isFalse((new Environment({'NODE_ENV': en})).isLocal())
+                    })
+                }
+
+            })
+        }
+    })
+
+    describe('#path', () => {
+        it('Creates an array of paths', () => {
+            const env = new Environment(test_environment)
+            const path = env.path()
+
+            assert.isArray(path)
+            assert.lengthOf(path, 3)
+            assert.deepEqual(path, ['path1', 'path2', 'path3'])
         })
     })
 })
