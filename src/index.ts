@@ -155,6 +155,7 @@ class Environment {
 
 		return value
 	}
+	raw = this.get
 
 	/**
 	 * Fetch an environment variable and convert it to an integer.
