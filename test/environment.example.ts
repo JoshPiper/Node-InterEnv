@@ -40,8 +40,8 @@ describe('Environment Examples', () => {
 
     describe('Readme Example 3', () => {
         it('Correctly Executes', async function(){
-            this.timeout(10000)
-            let {stdout, stderr} = await pExec("npx -q ts-node examples/readme-3.ts", {env: {PATH: process.env.PATH}})
+            this.timeout(2000)
+            let {stdout, stderr} = await pExec("ts-node examples/readme-3.ts", {env: {PATH: process.env.PATH}})
 
             assert.strictEqual(stdout.trim(),
         'DB_ / NODE_ENV? false\n' +
