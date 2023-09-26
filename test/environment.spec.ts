@@ -356,4 +356,20 @@ describe('Environment', () => {
             assert.deepEqual(path, ['path1', 'path2', 'path3'])
         })
     })
+
+    describe('Key Normalisation', () => {
+        it('Can be enabled', () => {
+            const env = new Environment(test_environment, "", true)
+        })
+
+        it('Normalises lowercase keys to upper case', () => {
+            const env = new Environment(test_environment, "", true)
+            assert.strictEqual(env.get('node_env'), 'test')
+        })
+
+        it('Returns undefined for unknown normalised keys', () => {
+            const env = new Environment(test_environment, "", true)
+            assert.isUndefined(env.get('test_nxt'))
+        })
+    })
 })
