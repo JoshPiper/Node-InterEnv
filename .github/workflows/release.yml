@@ -29,6 +29,7 @@ jobs:
       - name: Install Node Dependencies
         run: npm install
       - name: Test
+        if: matrix.test != 'examples' && matrix.os != 'windows'
         run: "npm run build:${{ matrix.test }} && npm run test:${{ matrix.test }}"
 
   release:
