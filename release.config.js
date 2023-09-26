@@ -34,6 +34,10 @@ module.exports = {
 						let discard = false
 						const issues = []
 
+						if (commit.type === 'chore'){
+							discard = true
+						}
+
 						commit.notes.forEach(note => {
 							note.title = 'BREAKING CHANGES'
 							discard = false
