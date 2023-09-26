@@ -390,5 +390,16 @@ describe('Environment', () => {
                 env.get('test_nxt', RaiseException)
             })
         })
+
+        it('Works by default on Windows', () => {
+            if (process.platform !== 'win32'){
+                (this as any).skip()
+                return
+            }
+
+            process.env.TEST_VALUE = 'value'
+            const env = new Environment()
+            assert.strictEqual(env.get('test_value'), 'value')
+        })
     })
 })
