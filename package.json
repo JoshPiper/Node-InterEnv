@@ -4,6 +4,7 @@
   "description": "A simple environment processing system.",
   "scripts": {
     "test": "mocha -r ts-node/register test/**/*.spec.ts",
+    "test:examples": "mocha -r ts-node/register test/**/*.example.ts",
     "coverage": "nyc --reporter=lcov mocha --reporter json --reporter-option output=test-results.json -r ts-node/register test/**/*.spec.ts",
     "readme": "common-readme > README.md",
     "release": "npx semantic-release",
@@ -11,7 +12,10 @@
     "prod": "npx tsc",
     "clean": "rm index.js index.d.ts 2>/dev/null || true",
     "build": "npm run clean && npm run prod",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "build:examples": "npm pack && npm install --no-save file:./doctor_internet-interenv-$npm_package_version.tgz",
+    "clean:examples": "npm uninstall doctor_internet-interenv-$npm_package_version.tgz && rm doctor_internet-interenv-$npm_package_version.tgz",
+    "examples": "npm run build:examples && npm run test:examples && npm run clean:examples"
   },
   "keywords": [],
   "author": "Joshua Piper",
