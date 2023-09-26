@@ -6,8 +6,11 @@ on:
 
 jobs:
   test:
-    name: 'Run Tests and Coverage'
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu, windows]
+    name: "Run Tests and Coverage (${{ matrix.os }})"
+    runs-on: "${{ matrix.os }}-latest"
     permissions:
       contents: read
       actions: read
