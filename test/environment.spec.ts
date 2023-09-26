@@ -1,6 +1,6 @@
 import {assert} from "chai"
 import {Environment, RaiseException} from "../src/index"
-import { delimiter } from "path"
+import {delimiter} from "path"
 
 type EnvNameSpec = [string, string, boolean, boolean, boolean, boolean, boolean][]
 
@@ -369,7 +369,11 @@ describe('Environment', () => {
 
         it('Returns undefined for unknown normalised keys', () => {
             const env = new Environment(test_environment, "", true)
+            assert.isFalse(env.has('test_nxt'))
             assert.isUndefined(env.get('test_nxt'))
+            assert.throws(() => {
+                env.get('test_nxt', RaiseException)
+            })
         })
     })
 })
