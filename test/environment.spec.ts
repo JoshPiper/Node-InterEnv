@@ -158,4 +158,52 @@ describe('Environment', () => {
             })
         })
     })
+
+    describe('#bool', () => {
+        it('Returns true values it has', () => {
+            const env = new Environment(test_environment)
+            const value = env.bool('TEST_BOOL_ON')
+
+            assert.isBoolean(value)
+            assert.isTrue(value)
+        })
+
+        it('Returns false values it has', () => {
+            const env = new Environment(test_environment)
+            const value = env.bool('TEST_BOOL_OFF')
+
+            assert.isBoolean(value)
+            assert.isFalse(value)
+        })
+
+        it('Can return undefined values', () => {
+            const env = new Environment(test_environment)
+            const value = env.bool('TEST_NXT')
+
+            assert.isUndefined(value)
+        })
+
+        it('Returns default values', () => {
+            const env = new Environment(test_environment)
+            const value = env.getBool('TEST_NXT', 'yes')
+
+            assert.isBoolean(value)
+            assert.isTrue(value)
+        })
+
+        it('Is case insensitive', () => {
+            const env = new Environment(test_environment)
+            const value = env.getBoolean('TEST_NXT', 'yEs')
+
+            assert.isBoolean(value)
+            assert.isTrue(value)
+        })
+
+        it('Raises an exception for invalid booleans', () => {
+            const env = new Environment(test_environment)
+            assert.throws(() => {
+                env.bool('TEST_NXT', 'invalid')
+            })
+        })
+    })
 })
