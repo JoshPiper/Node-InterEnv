@@ -3,7 +3,8 @@
   "version": "2.2.0",
   "description": "A simple environment processing system.",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha -r ts-node/register test/**/*.spec.ts",
+    "coverage": "nyc --reporter=lcov mocha -r ts-node/register test/**/*.spec.ts",
     "readme": "common-readme > README.md",
     "release": "npx semantic-release",
     "dev": "npx tsc --watch",
@@ -24,10 +25,17 @@
   },
   "devDependencies": {
     "@tsconfig/node-lts": "^18.12.5",
+    "@types/chai": "^4.3.6",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^20.6.5",
+    "@types/sinon": "^10.0.17",
+    "chai": "^4.3.8",
     "common-readme": "^1.1.0",
     "mocha": "^6.2.3",
+    "nyc": "^15.1.0",
     "semantic-release": "^22.0.1",
+    "sinon": "^16.0.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
   "main": "src/index.js",
