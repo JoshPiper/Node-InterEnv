@@ -6,3 +6,6 @@ package-lock.json
 *.d.ts
 !src/types.d.ts
 *.js
+
+.nyc_output/
+coverage/
