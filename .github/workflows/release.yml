@@ -6,9 +6,36 @@ on:
       - main
 
 jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ ubuntu, windows ]
+        test: [ source, examples ]
+      fail-fast: true
+    name: "Run Tests and Coverage (${{ matrix.os }} | ${{ matrix.test }})"
+    runs-on: "${{ matrix.os }}-latest"
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install Node Dependencies
+        run: npm install
+      - name: Test
+        if: matrix.test != 'examples' && matrix.os != 'windows'
+        run: "npm run build:${{ matrix.test }} && npm run test:${{ matrix.test }}"
+
   release:
     name: 'Build Release'
     runs-on: ubuntu-latest
+    needs:
+      - test
     steps:
       - name: Checkout
         uses: actions/checkout@v4

@@ -1,0 +1,42 @@
+name: Test Coverage
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu, windows]
+    name: "Run Tests and Coverage (${{ matrix.os }})"
+    runs-on: "${{ matrix.os }}-latest"
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install Node Dependencies
+        run: npm install
+      - name: Test
+        run: npm run test:source:coverage
+        continue-on-error: true
+      - name: Upload Coverage Report
+        uses: codecov/codecov-action@v3
+        continue-on-error: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload Test Report
+        uses: dorny/test-reporter@v1
+        continue-on-error: true
+        with:
+          name: Tests
+          path: test-results.json
+          reporter: mocha-json
