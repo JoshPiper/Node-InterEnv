@@ -1,10 +1,6 @@
 module.exports = {
 	"branches": [
-		"main",
-		{
-			"name": "refactor/rewrite",
-			"prerelease": "alpha"
-		}
+		"main"
 	],
 	"plugins": [
 		[
