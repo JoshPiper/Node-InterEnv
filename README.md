@@ -8,7 +8,10 @@ InterEnv is designed to be a thin wrapper around process.env, or any string keye
 
 ```js {}[examples/readme-1.cjs]
 const {Environment} = require('@doctor_internet/interenv')
+
+// By default, wrap process.env
 const env = new Environment()
+
 console.log(env.environment())
 console.log(env.get('TEST_VAR'))
 console.log(env.int('PORT'))
