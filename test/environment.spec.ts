@@ -14,7 +14,8 @@ const test_environment = {
     TEST_BOOL_ON: 'on',
     TEST_BOOL_OFF: '❌',
     TEST_LIST: 'a| b| c| d |e',
-    TEST_CSV: 'a, b, c, d ,e'
+    TEST_CSV: 'a, b, c, d ,e',
+    TEST_MUT: <'mutable' | 'mutated' | undefined>undefined
 }
 
 describe('Environment', () => {
@@ -78,6 +79,20 @@ describe('Environment', () => {
             assert.doesNotThrow(() => {
                 env.get('NODE_ENV', RaiseException)
             })
+        })
+
+        it('Updates on modification', () => {
+            const env = new Environment(test_environment)
+            test_environment.TEST_MUT = 'mutable'
+
+            const value1 = env.get('TEST_MUT')
+            assert.isString(value1)
+            assert.strictEqual(value1, "mutable")
+
+            test_environment.TEST_MUT = 'mutated'
+            const value2 = env.get('TEST_MUT')
+            assert.isString(value2)
+            assert.strictEqual(value2, "mutated")
         })
     })
 
