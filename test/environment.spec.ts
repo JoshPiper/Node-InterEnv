@@ -267,7 +267,7 @@ describe('Environment', () => {
             const entries = (new Environment(test_environment)).prefixed('TEST_').all()
             assert.hasAnyKeys(entries, ['GET', 'INT', 'INT_HEX'])
             assert.doesNotHaveAnyKeys(entries, ['NODE_ENV', 'ENV'])
-            assert.lengthOf(Object.entries(entries), Object.entries(test_environment).length - 1)
+            assert.lengthOf(Object.keys(entries), Object.keys(test_environment).length - Object.keys(test_environment).filter(key => !key.startsWith('TEST_')).length)
         })
     })
 
