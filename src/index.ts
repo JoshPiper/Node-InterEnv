@@ -3,8 +3,8 @@ import iEnvironment from './types'
 import UnableToConvertNumberException from "./errors/UnableToConvertNumberException";
 import EnvironmentVariableNotFoundException from "./errors/EnvironmentVariableNotFoundException";
 import UnableToConvertBooleanException from "./errors/UnableToConvertBooleanException";
+import {delimiter} from 'path';
 import Dict = NodeJS.Dict;
-import { delimiter } from 'path';
 
 const IS_WIN = process.platform === "win32"
 const RaiseException: unique symbol = Symbol('Raise an exception if the given environment variable is not provided.')
