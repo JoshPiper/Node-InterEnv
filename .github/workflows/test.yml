@@ -27,10 +27,12 @@ jobs:
         continue-on-error: true
       - name: Upload Coverage Report
         uses: codecov/codecov-action@v3
+        continue-on-error: true
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Upload Test Report
         uses: dorny/test-reporter@v1
+        continue-on-error: true
         with:
           name: Tests
           path: test-results.json
