@@ -8,6 +8,11 @@ jobs:
   test:
     name: 'Run Tests and Coverage'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,7 +24,14 @@ jobs:
         run: npm install
       - name: Test
         run: npm run coverage
+        continue-on-error: true
       - name: Upload Coverage Report
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload Test Report
+        uses: dorny/test-reporter@v1
+        with:
+          name: Tests
+          path: test-results.json
+          reporter: mocha-json
