@@ -391,10 +391,9 @@ describe('Environment', () => {
             })
         })
 
-        it('Works by default on Windows', () => {
+        it('Works by default on Windows', function(){
             if (process.platform !== 'win32'){
-                (this as any).skip()
-                return
+                return this.skip()
             }
 
             process.env.TEST_VALUE = 'value'
