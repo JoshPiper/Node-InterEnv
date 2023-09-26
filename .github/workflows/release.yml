@@ -12,6 +12,7 @@ jobs:
       matrix:
         os: [ ubuntu, windows ]
         test: [ test, examples ]
+      fail-fast: true
     name: "Run Tests and Coverage (${{ matrix.os }} | ${{ matrix.test }})"
     runs-on: "${{ matrix.os }}-latest"
     permissions:
