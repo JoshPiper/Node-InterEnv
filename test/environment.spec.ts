@@ -5,16 +5,16 @@ import {delimiter} from "path"
 type EnvNameSpec = [string, string, boolean, boolean, boolean, boolean, boolean][]
 
 const test_environment = {
-    'NODE_ENV': 'test',
-    'PATH': `path1${delimiter}path2${delimiter}path3`,
-    'TEST_GET': 'value',
-    'TEST_INT': '1',
-    'TEST_INT_HEX': '0xff',
-    'TEST_FLOAT': '1.5',
-    'TEST_BOOL_ON': 'on',
-    'TEST_BOOL_OFF': '❌',
-    'TEST_LIST': 'a| b| c| d |e',
-    'TEST_CSV': 'a, b, c, d ,e'
+    NODE_ENV: 'test',
+    PATH: `path1${delimiter}path2${delimiter}path3`,
+    TEST_GET: 'value',
+    TEST_INT: '1',
+    TEST_INT_HEX: '0xff',
+    TEST_FLOAT: '1.5',
+    TEST_BOOL_ON: 'on',
+    TEST_BOOL_OFF: '❌',
+    TEST_LIST: 'a| b| c| d |e',
+    TEST_CSV: 'a, b, c, d ,e'
 }
 
 describe('Environment', () => {
