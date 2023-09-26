@@ -29,7 +29,7 @@ jobs:
       - name: Install Node Dependencies
         run: npm install
       - name: Test
-        run: "npm run test:${{ matrix.test }}"
+        run: "npm run build:${{ matrix.test }} && npm run test:${{ matrix.test }}"
 
   release:
     name: 'Build Release'
