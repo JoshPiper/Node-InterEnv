@@ -92,6 +92,10 @@ user@localhost:~$ ts-node examples/readme-1.ts
 > DB_ / BACKUP_ / DB: test_database_us
 ```
 
+### API Reference
+
+-- todo
+
 ## Install
 
 With [npm](https://npmjs.org/) installed, run
