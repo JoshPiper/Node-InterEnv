@@ -12,6 +12,7 @@ describe('Environment Examples', () => {
         it('Correctly Executes', async () => {
             let {stdout, stderr} = await pExecFile(node, ['examples/readme-1.cjs'], {
                 env: {
+                    PATH: process.env.PATH,
                     NODE_ENV: 'local',
                     TEST_VAR: "Hello, world!",
                     PORT: "80"
@@ -25,7 +26,7 @@ describe('Environment Examples', () => {
 
     describe('Readme Example 2', () => {
         it('Correctly Executes', async () => {
-            let {stdout, stderr} = await pExecFile(node, ['examples/readme-2.mjs'], {env: {}})
+            let {stdout, stderr} = await pExecFile(node, ['examples/readme-2.mjs'], {env: {PATH: process.env.PATH}})
 
             assert.strictEqual(stdout.trim(),
                 'string -> test\n' +
@@ -39,7 +40,7 @@ describe('Environment Examples', () => {
 
     describe('Readme Example 3', () => {
         it('Correctly Executes', async () => {
-            let {stdout, stderr} = await pExec("npx -q ts-node examples/readme-3.ts", {env: {}})
+            let {stdout, stderr} = await pExec("npx -q ts-node examples/readme-3.ts", {env: {PATH: process.env.PATH}})
 
             assert.strictEqual(stdout.trim(),
         'DB_ / NODE_ENV? false\n' +
