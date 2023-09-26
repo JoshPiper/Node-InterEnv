@@ -219,7 +219,7 @@ class Environment {
 			return undefined
 		}
 
-		const bool = Environment.booleans[value]
+		const bool = Environment.booleans[value.toLowerCase()]
 		if (bool === undefined){
 			throw new UnableToConvertBooleanException(value)
 		}
