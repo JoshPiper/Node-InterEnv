@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu, windows ]
-        test: [ test, examples ]
+        test: [ source, examples ]
       fail-fast: true
     name: "Run Tests and Coverage (${{ matrix.os }} | ${{ matrix.test }})"
     runs-on: "${{ matrix.os }}-latest"
@@ -29,7 +29,7 @@ jobs:
       - name: Install Node Dependencies
         run: npm install
       - name: Test
-        run: "npm run ${{ matrix.test }}"
+        run: "npm run test:${{ matrix.test }}"
 
   release:
     name: 'Build Release'
