@@ -92,6 +92,13 @@ describe('Environment', () => {
             assert.strictEqual(value, 1)
         })
 
+        it('Can return undefined values', () => {
+            const env = new Environment(test_environment)
+            const value = env.int('TEST_NXT')
+
+            assert.isUndefined(value)
+        })
+
         it('Returns default values', () => {
             const env = new Environment(test_environment)
             const value = env.int('TEST_NXT', '2')
@@ -126,6 +133,13 @@ describe('Environment', () => {
             assert.isNumber(value)
             assert.isNotNaN(value)
             assert.strictEqual(value, 1.5)
+        })
+
+        it('Can return undefined values', () => {
+            const env = new Environment(test_environment)
+            const value = env.float('TEST_NXT')
+
+            assert.isUndefined(value)
         })
 
         it('Returns default values', () => {
