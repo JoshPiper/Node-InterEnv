@@ -118,6 +118,12 @@ module.exports = {
 			}
 		],
 		"@semantic-release/npm",
-		"@semantic-release/github"
+		[
+			"@semantic-release/github",
+			{
+				// TODO: If project gets enough attention to warrant, re-enable success comments.
+				"successComment": false
+			}
+		]
 	]
 }
