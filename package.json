@@ -38,7 +38,7 @@
     "common-readme": "^1.1.0",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
-    "semantic-release": "^22.0.5",
+    "semantic-release": "^23.0.0",
     "sinon": "^17.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
