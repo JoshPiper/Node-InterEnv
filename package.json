@@ -37,7 +37,7 @@
     "chai": "^5.1.0",
     "common-readme": "^1.1.0",
     "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
+    "nyc": "^17.0.0",
     "semantic-release": "^24.0.0",
     "sinon": "^18.0.0",
     "ts-node": "^10.9.1",
