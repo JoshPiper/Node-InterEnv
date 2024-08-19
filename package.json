@@ -32,7 +32,7 @@
     "@tsconfig/node-lts": "^18.12.5",
     "@types/chai": "^4.3.7",
     "@types/mocha": "^10.0.2",
-    "@types/node": "^20.8.4",
+    "@types/node": "^22.4.1",
     "@types/sinon": "^17.0.0",
     "chai": "^5.1.0",
     "common-readme": "^1.1.0",
