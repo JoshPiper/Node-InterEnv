@@ -33,7 +33,7 @@
     "@types/chai": "^5.0.1",
     "@types/mocha": "^10.0.2",
     "@types/node": "^24.3.0",
-    "@types/sinon": "^17.0.0",
+    "@types/sinon": "^20.0.0",
     "chai": "^5.1.0",
     "common-readme": "^1.1.0",
     "mocha": "^11.1.0",
